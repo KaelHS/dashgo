@@ -7,7 +7,7 @@ export default function SignIn() {
       w="100vh" 
       h="100vh" 
       align="center" 
-      justify="center"
+      justifyContent="center"
       >
         <Flex 
           as="form"
