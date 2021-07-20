@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Button, Icon, Table,Thead, Tbody, Td, Tr, Th, Checkbox, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, Icon, Table,Thead, Tbody, Td, Tr, Th, Checkbox, Text, useBreakpointValue } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
@@ -6,6 +6,11 @@ import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
 
 export default function UserList() {
+
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg:true
+    });
 
     return(
         <Box>
@@ -28,11 +33,11 @@ export default function UserList() {
                 <Table colorScheme="whiteAlpha">
                     <Thead>
                         <Tr>
-                            <Th px="6" color="gray.300" w="8">
+                            <Th px={["4","4","6"]} color="gray.300" w="8">
                                 <Checkbox colorScheme="pink" />
                             </Th>
                             <Th>Usuário</Th>
-                            <Th>Data de cadastro</Th>
+                            { isWideVersion && <Th>Data de cadastro</Th> }
                             <Th w="8"></Th>
                         </Tr>
                     </Thead>
@@ -47,14 +52,17 @@ export default function UserList() {
                                     <Text fontSize="sm" color="gray.300">kael_hs@hotmail.com</Text>
                                 </Box>
                             </Td>
-                            <Td> 04 de Abril, 2021</Td>
+                            { isWideVersion && <Td> 04 de Abril, 2021</Td>}
                             <Td>
-                                <Button 
+                                {/* <Button 
                                     as="a" 
                                     size="sm" 
                                     fontSize="sm" 
                                     colorScheme="purple"
-                                    leftIcon={<Icon as={RiPencilLine} fontSize="20"/> }>Editar</Button>
+                                    leftIcon={<Icon as={RiPencilLine} fontSize="20"/> }
+                                >
+                                    {isWideVersion && }
+                                </Button> */}
                             </Td>
                         </Tr>
                     </Tbody>
