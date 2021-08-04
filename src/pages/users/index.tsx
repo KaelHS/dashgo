@@ -1,16 +1,30 @@
-import { Box, Flex, Heading, Button, Icon, Table,Thead, Tbody, Td, Tr, Th, Checkbox, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, Icon, Table,Thead, Tbody, Td, Tr, Th, Checkbox, Text, useBreakpointValue, Spinner } from "@chakra-ui/react";
 import { RiAddLine } from "react-icons/ri";
 import Link from 'next/link';
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
+import { useEffect } from "react";
+import { useQuery } from 'react-query';
 
 export default function UserList() {
+
+    const { data, isLoading, error } = useQuery('users', async () => {
+
+        const response = await fetch('http://localhost:3000/api/users');
+        
+        const data = await response.json();
+
+        return data;
+    })
 
     const isWideVersion = useBreakpointValue({
         base: false,
         lg:true
     });
+
+    useEffect( () => {
+    }, []);
 
     return(
         <Box>
@@ -33,7 +47,17 @@ export default function UserList() {
                     </Link>
                 </Flex>
             
-                <Table colorScheme="whiteAlpha">
+                { isLoading ? (
+                    <Flex justify="center">
+                        <Spinner />
+                    </Flex>
+                ): error ? (
+                    <Flex justify="center">
+                        <Text>Falha ao obter os dados do usuário</Text>
+                    </Flex>
+                ) : (
+                    <>
+                    <Table colorScheme="whiteAlpha">
                     <Thead>
                         <Tr>
                             <Th px={["4","4","6"]} color="gray.300" w="8">
@@ -57,21 +81,14 @@ export default function UserList() {
                             </Td>
                             { isWideVersion && <Td> 04 de Abril, 2021</Td>}
                             <Td>
-                                {/* <Button 
-                                    as="a" 
-                                    size="sm" 
-                                    fontSize="sm" 
-                                    colorScheme="purple"
-                                    leftIcon={<Icon as={RiPencilLine} fontSize="20"/> }
-                                >
-                                    {isWideVersion && }
-                                </Button> */}
                             </Td>
                         </Tr>
                     </Tbody>
                 </Table>
 
                 <Pagination />
+                    </>
+                ) }
 
 
             </Box>
