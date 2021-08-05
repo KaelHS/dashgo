@@ -15,7 +15,21 @@ export default function UserList() {
         
         const data = await response.json();
 
-        return data;
+        const users = data.users.map( user => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            })
+
+        }))
+
+        return users;
+    }, {
+        staleTime: 5000,
     })
 
     const isWideVersion = useBreakpointValue({
@@ -69,20 +83,22 @@ export default function UserList() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td  px="6">
-                                <Checkbox colorScheme="pink" />
-                            </Td>
-                            <Td>
-                                <Box>
-                                    <Text fontWeight="bold">Kael Silva</Text>
-                                    <Text fontSize="sm" color="gray.300">kael_hs@hotmail.com</Text>
-                                </Box>
-                            </Td>
-                            { isWideVersion && <Td> 04 de Abril, 2021</Td>}
-                            <Td>
-                            </Td>
-                        </Tr>
+                        { data.map( (user) => (
+                            <Tr key={user.id}>
+                                <Td  px="6">
+                                    <Checkbox colorScheme="pink" />
+                                </Td>
+                                <Td>
+                                    <Box>
+                                        <Text fontWeight="bold">{user.name}</Text>
+                                        <Text fontSize="sm" color="gray.300">{user.email}</Text>
+                                    </Box>
+                                </Td>
+                                { isWideVersion && <Td>{user.createdAt}</Td>}
+                                <Td>
+                                </Td>
+                            </Tr>
+                        )) }
                     </Tbody>
                 </Table>
 
