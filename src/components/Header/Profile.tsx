@@ -13,7 +13,7 @@ export function Profile({ showProfileData = true} : ProfileProps){
                     <Text color="gray.300" fontSize="small">kael_hs@hotmail.com</Text>
                 </Box>
             }
-            <Avatar size="md" name="Kael Silva" src="https://github.com/KaelHS.jpg"/>
+            <Avatar size="md" name="Kael Silva" src="https://avatars.githubusercontent.com/u/15847423?v=4"/>
         </Flex>
     );
 }
